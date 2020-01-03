@@ -12,6 +12,6 @@ def createApplication(config_file=config.DEFAULT_CONFIG_FILE):
 
     cfg = config.readConfig(config_file)
 
-    application = service.Application(cfg[config.APP_NAME])
+    application = service.Application(cfg['DEFAULT']['appname'])
 
     return application

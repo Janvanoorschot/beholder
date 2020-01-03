@@ -1,15 +1,18 @@
 import configparser
 
 DEFAULT_CONFIG_FILE = '/etc/beholder.conf'
-APP_NAME = 'beholder'
 
 def readConfig(filename):
     defs = {
-        "host": {
-            "host1": "value1_host1"
+        "DEFAULT": {
+            "appname": "beholder"
+        },
+        "server": {
+            "host": "localhost",
+            "port": 22
         },
         "output": {
-            "output1": "value_output1"
+            "file": "file.out"
         }
     }
     cfg = configparser.ConfigParser()
