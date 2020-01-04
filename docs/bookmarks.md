@@ -2,8 +2,14 @@
 
 # Twisted
 
-* [Conch, SSH module](https://twistedmatrix.com/documents/current/conch/)
+* [Writing Servers](https://twistedmatrix.com/documents/current/core/howto/servers.html)
+* [Writing Clients](https://twistedmatrix.com/documents/current/core/howto/clients.html)
+* [Test-driven development with Twisted](https://twistedmatrix.com/documents/current/core/howto/trial.html)
 * [Getting Connected with Endpoints](https://twistedmatrix.com/documents/current/core/howto/endpoints.html)
+
+# Twisted/SSH
+* [Conch, SSH module](https://twistedmatrix.com/documents/current/conch/)
+* [Writing a client with Twisted Conch](https://twistedmatrix.com/documents/current/conch/howto/conch_client.html)
 
 # Competiters
 
