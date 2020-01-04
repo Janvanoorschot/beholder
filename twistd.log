@@ -1,0 +1,168 @@
+2020-01-04T21:46:32+0100 [-] Loading /data/dev/beholder/bin/beholder_dev.tac...
+2020-01-04T21:46:32+0100 [beholder.setup#info] creating beholder application
+2020-01-04T21:46:36+0100 [-] Loaded.
+2020-01-04T21:46:36+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/data/dev/beholder/venv/bin/python 3.7.5) starting up.
+2020-01-04T21:46:36+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2020-01-04T21:46:36+0100 [-] Failed to unlink PID file:
+	Traceback (most recent call last):
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/twistd.py", line 25, in runApp
+	    runner.run()
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/application/app.py", line 385, in run
+	    self.postApplication()
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 261, in postApplication
+	    self.removePID(self.config['pidfile'])
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 288, in removePID
+	    log.err(e, "Failed to unlink PID file:")
+	--- <exception caught here> ---
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 283, in removePID
+	    os.unlink(pidfile)
+	builtins.FileNotFoundError: [Errno 2] No such file or directory: '/data/dev/beholder/twistd.pid'
+	
+2020-01-04T21:46:36+0100 [stderr#error] Traceback (most recent call last):
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/ptvsd_launcher.py", line 43, in <module>
+2020-01-04T21:46:36+0100 [stderr#error]     main(ptvsdArgs)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/__main__.py", line 432, in main
+2020-01-04T21:46:36+0100 [stderr#error]     run()
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/__main__.py", line 316, in run_file
+2020-01-04T21:46:36+0100 [stderr#error]     runpy.run_path(target, run_name='__main__')
+2020-01-04T21:46:36+0100 [stderr#error]   File "/usr/lib/python3.7/runpy.py", line 263, in run_path
+2020-01-04T21:46:36+0100 [stderr#error]     pkg_name=pkg_name, script_name=fname)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/usr/lib/python3.7/runpy.py", line 96, in _run_module_code
+2020-01-04T21:46:36+0100 [stderr#error]     mod_name, mod_spec, pkg_name, script_name)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/usr/lib/python3.7/runpy.py", line 85, in _run_code
+2020-01-04T21:46:36+0100 [stderr#error]     exec(code, run_globals)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/bin/twistd", line 10, in <module>
+2020-01-04T21:46:36+0100 [stderr#error]     sys.exit(run())
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/twistd.py", line 31, in run
+2020-01-04T21:46:36+0100 [stderr#error]     app.run(runApp, ServerOptions)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/application/app.py", line 674, in run
+2020-01-04T21:46:36+0100 [stderr#error]     runApp(config)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/twistd.py", line 25, in runApp
+2020-01-04T21:46:36+0100 [stderr#error]     runner.run()
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/application/app.py", line 385, in run
+2020-01-04T21:46:36+0100 [stderr#error]     self.postApplication()
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 254, in postApplication
+2020-01-04T21:46:36+0100 [stderr#error]     self.startApplication(self.application)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 440, in startApplication
+2020-01-04T21:46:36+0100 [stderr#error]     self.config['pidfile'])
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 328, in setupEnvironment
+2020-01-04T21:46:36+0100 [stderr#error]     self.config["statusPipe"] = self.daemonize(reactor)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 357, in daemonize
+2020-01-04T21:46:36+0100 [stderr#error]     if os.fork():  # launch child and...
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/_pydev_bundle/pydev_monkey.py", line 528, in new_fork
+2020-01-04T21:46:36+0100 [stderr#error]     _on_forked_process()
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/_pydev_bundle/pydev_monkey.py", line 50, in _on_forked_process
+2020-01-04T21:46:36+0100 [stderr#error]     pydevd.settrace_forked()
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 2427, in settrace_forked
+2020-01-04T21:46:36+0100 [stderr#error]     patch_multiprocessing=True,
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 2179, in settrace
+2020-01-04T21:46:36+0100 [stderr#error]     wait_for_ready_to_run,
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 2230, in _locked_settrace
+2020-01-04T21:46:36+0100 [stderr#error]     debugger.connect(host, port)  # Note: connect can raise error.
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 1060, in connect
+2020-01-04T21:46:36+0100 [stderr#error]     s = start_client(host, port)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/pydevd_hooks.py", line 136, in _start_client
+2020-01-04T21:46:36+0100 [stderr#error]     return start_client(daemon, h, p)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/log.py", line 110, in g
+2020-01-04T21:46:36+0100 [stderr#error]     return f(*args, **kwargs)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/pydevd_hooks.py", line 74, in start_client
+2020-01-04T21:46:36+0100 [stderr#error]     sock, start_session = daemon.start_client((host, port))
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/daemon.py", line 214, in start_client
+2020-01-04T21:46:36+0100 [stderr#error]     with self.started():
+2020-01-04T21:46:36+0100 [stderr#error]   File "/usr/lib/python3.7/contextlib.py", line 112, in __enter__
+2020-01-04T21:46:36+0100 [stderr#error]     return next(self.gen)
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/daemon.py", line 110, in started
+2020-01-04T21:46:36+0100 [stderr#error]     self.start()
+2020-01-04T21:46:36+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/daemon.py", line 145, in start
+2020-01-04T21:46:36+0100 [stderr#error]     raise RuntimeError('already started')
+2020-01-04T21:46:36+0100 [stderr#error] RuntimeError: already started
+2020-01-04T21:48:19+0100 [-] Loading /data/dev/beholder/bin/beholder_dev.tac...
+2020-01-04T21:48:19+0100 [beholder.setup#info] creating beholder application
+2020-01-04T21:48:19+0100 [-] Loaded.
+2020-01-04T21:48:19+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/data/dev/beholder/venv/bin/python 3.7.5) starting up.
+2020-01-04T21:48:19+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2020-01-04T21:48:19+0100 [-] Failed to unlink PID file:
+	Traceback (most recent call last):
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/twistd.py", line 25, in runApp
+	    runner.run()
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/application/app.py", line 385, in run
+	    self.postApplication()
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 261, in postApplication
+	    self.removePID(self.config['pidfile'])
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 288, in removePID
+	    log.err(e, "Failed to unlink PID file:")
+	--- <exception caught here> ---
+	  File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 283, in removePID
+	    os.unlink(pidfile)
+	builtins.FileNotFoundError: [Errno 2] No such file or directory: '/data/dev/beholder/twistd.pid'
+	
+2020-01-04T21:48:19+0100 [stderr#error] Traceback (most recent call last):
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/ptvsd_launcher.py", line 43, in <module>
+2020-01-04T21:48:19+0100 [stderr#error]     main(ptvsdArgs)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/__main__.py", line 432, in main
+2020-01-04T21:48:19+0100 [stderr#error]     run()
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/__main__.py", line 316, in run_file
+2020-01-04T21:48:19+0100 [stderr#error]     runpy.run_path(target, run_name='__main__')
+2020-01-04T21:48:19+0100 [stderr#error]   File "/usr/lib/python3.7/runpy.py", line 263, in run_path
+2020-01-04T21:48:19+0100 [stderr#error]     pkg_name=pkg_name, script_name=fname)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/usr/lib/python3.7/runpy.py", line 96, in _run_module_code
+2020-01-04T21:48:19+0100 [stderr#error]     mod_name, mod_spec, pkg_name, script_name)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/usr/lib/python3.7/runpy.py", line 85, in _run_code
+2020-01-04T21:48:19+0100 [stderr#error]     exec(code, run_globals)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/bin/twistd", line 10, in <module>
+2020-01-04T21:48:19+0100 [stderr#error]     sys.exit(run())
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/twistd.py", line 31, in run
+2020-01-04T21:48:19+0100 [stderr#error]     app.run(runApp, ServerOptions)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/application/app.py", line 674, in run
+2020-01-04T21:48:19+0100 [stderr#error]     runApp(config)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/twistd.py", line 25, in runApp
+2020-01-04T21:48:19+0100 [stderr#error]     runner.run()
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/application/app.py", line 385, in run
+2020-01-04T21:48:19+0100 [stderr#error]     self.postApplication()
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 254, in postApplication
+2020-01-04T21:48:19+0100 [stderr#error]     self.startApplication(self.application)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 440, in startApplication
+2020-01-04T21:48:19+0100 [stderr#error]     self.config['pidfile'])
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 328, in setupEnvironment
+2020-01-04T21:48:19+0100 [stderr#error]     self.config["statusPipe"] = self.daemonize(reactor)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/data/dev/beholder/venv/lib/python3.7/site-packages/twisted/scripts/_twistd_unix.py", line 357, in daemonize
+2020-01-04T21:48:19+0100 [stderr#error]     if os.fork():  # launch child and...
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/_pydev_bundle/pydev_monkey.py", line 528, in new_fork
+2020-01-04T21:48:19+0100 [stderr#error]     _on_forked_process()
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/_pydev_bundle/pydev_monkey.py", line 50, in _on_forked_process
+2020-01-04T21:48:19+0100 [stderr#error]     pydevd.settrace_forked()
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 2427, in settrace_forked
+2020-01-04T21:48:19+0100 [stderr#error]     patch_multiprocessing=True,
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 2179, in settrace
+2020-01-04T21:48:19+0100 [stderr#error]     wait_for_ready_to_run,
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 2230, in _locked_settrace
+2020-01-04T21:48:19+0100 [stderr#error]     debugger.connect(host, port)  # Note: connect can raise error.
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/_vendored/pydevd/pydevd.py", line 1060, in connect
+2020-01-04T21:48:19+0100 [stderr#error]     s = start_client(host, port)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/pydevd_hooks.py", line 136, in _start_client
+2020-01-04T21:48:19+0100 [stderr#error]     return start_client(daemon, h, p)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/log.py", line 110, in g
+2020-01-04T21:48:19+0100 [stderr#error]     return f(*args, **kwargs)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/pydevd_hooks.py", line 74, in start_client
+2020-01-04T21:48:19+0100 [stderr#error]     sock, start_session = daemon.start_client((host, port))
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/daemon.py", line 214, in start_client
+2020-01-04T21:48:19+0100 [stderr#error]     with self.started():
+2020-01-04T21:48:19+0100 [stderr#error]   File "/usr/lib/python3.7/contextlib.py", line 112, in __enter__
+2020-01-04T21:48:19+0100 [stderr#error]     return next(self.gen)
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/daemon.py", line 110, in started
+2020-01-04T21:48:19+0100 [stderr#error]     self.start()
+2020-01-04T21:48:19+0100 [stderr#error]   File "/home/jan/.vscode/extensions/ms-python.python-2019.11.50794/pythonFiles/lib/python/old_ptvsd/ptvsd/daemon.py", line 145, in start
+2020-01-04T21:48:19+0100 [stderr#error]     raise RuntimeError('already started')
+2020-01-04T21:48:19+0100 [stderr#error] RuntimeError: already started
+2020-01-04T21:49:31+0100 [-] Loading bin/beholder_dev.tac...
+2020-01-04T21:49:31+0100 [beholder.setup#info] creating beholder application
+2020-01-04T21:49:31+0100 [-] Loaded.
+2020-01-04T21:49:31+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 19.10.0 (/data/dev/beholder/venv/bin/python3 3.7.5) starting up.
+2020-01-04T21:49:31+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2020-01-04T21:49:31+0100 [-] DemoServerFactory starting on 8007
+2020-01-04T21:49:31+0100 [beholder.demo.demoservice.DemoServerFactory#info] Starting factory <beholder.demo.demoservice.DemoServerFactory object at 0x7fe236fbfd90>
+2020-01-04T21:49:42+0100 [-] Received SIGTERM, shutting down.
+2020-01-04T21:49:42+0100 [beholder.demo.demoservice.DemoServerFactory] (TCP Port 8007 Closed)
+2020-01-04T21:49:42+0100 [beholder.demo.demoservice.DemoServerFactory#info] Stopping factory <beholder.demo.demoservice.DemoServerFactory object at 0x7fe236fbfd90>
+2020-01-04T21:49:42+0100 [-] Main loop terminated.
+2020-01-04T21:49:42+0100 [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.
