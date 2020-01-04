@@ -3,5 +3,4 @@ theme: readthedocs
 nav:
   - 'Home': 'index.md'
   - 'Tools':
-    - 'VS Code': 'vscode.md'
-    - 'Python/Pip': 'python-pip.md'
+    - 'Bookmarks': 'bookmarks.md'
