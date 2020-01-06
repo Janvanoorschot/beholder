@@ -15,7 +15,7 @@ def createApplication(config_file=config.DEFAULT_CONFIG_FILE):
     application = service.Application(cfg['DEFAULT']['appname'])
 
     # server application
-    serverservice = beholder.demo.DemoService()
+    serverservice = beholder.demo.SSHService()
     serverservice.setServiceParent(application)
 
     return application

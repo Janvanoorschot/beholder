@@ -1,3 +1,6 @@
 pylint
 mkdocs
 Twisted
+cryptography
+bcrypt
+pyasn1
