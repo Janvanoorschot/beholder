@@ -108,7 +108,7 @@ class SSHSession(object):
 class EchoProtocol(protocol.Protocol):
 
     def dataReceived(self, data):
-        if data == b'\r':
+d        if data == b'\r':
             data = b'\r\n'
         elif data == b'\x03': #^C
             self.transport.loseConnection()
