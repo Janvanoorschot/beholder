@@ -3,12 +3,13 @@ from twisted.internet import reactor
 
 class SSHClient:
 
-    def __init__(self, host, port, username, keys, knownhosts):
+    def __init__(self, host, port, username, keys=None, knownhosts=None, agent=None, reactor=reactor):
         self.host = host
         self.port = port
         self.username = username
         self.keys = keys
         self.knownhosts = knownhosts
+        self.agent=agent
         self.reactor = reactor
 
     def newConnection(self, command):

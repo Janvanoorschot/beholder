@@ -1,9 +1,14 @@
 import os, getpass
 from twisted.trial import unittest
+from twisted.internet import reactor
+from twisted.python.filepath import FilePath
+
 from twisted.internet.protocol import Factory, Protocol
 from twisted.conch.ssh.keys import EncryptedKeyError, Key
 from twisted.internet.task import react
 from twisted.conch.client.knownhosts import KnownHostsFile
+from twisted.internet.endpoints import UNIXClientEndpoint
+
 
 from beholder.ssh.sshclient import SSHClient
 
@@ -20,8 +25,7 @@ class TestProtocol(Protocol):
         self.transport.write("mork calling orson")
 
     def dataReceived(self, data):
-        if(data == "come in mork"):
-            pass
+        self.transport.loseConnection()
 
     def connectionLost(self, reason):
         pass
@@ -35,14 +39,24 @@ class SSHTest(unittest.TestCase):
     def testSSH101(self):
         def finished():
             pass
+        keypaths = [
+            # '/data/dev/beholder/sys/ssh-keys/client_rsa.pub',
+            '/data/dev/beholder/sys/ssh-keys/client_rsa'
+        ]
         keys = []
-        # keyPath = os.path.abspath('sys/ssh-keys/client_rsa.pub')
-        keyPath = '/data/dev/beholder/sys/ssh-keys/client_rsa.pub'
+        for keyPath in keypaths:
+            if os.path.exists(keyPath):
+                keys.append(readKey(keyPath))
         knownHostsPath = '/home/jan/.ssh/known_hosts'
-        if os.path.exists(keyPath):
-            keys.append(readKey(keyPath))
-        knownHosts = KnownHostsFile.fromPath(knownHostsPath)
-        client = SSHClient("localhost", 2222, "user", keys, knownHosts)
+        knownHosts = KnownHostsFile.fromPath(FilePath(knownHostsPath))
+        # for entry in knownHosts.iterentries():
+        #     if entry.matchesHost(b"[localhost]:2222"):
+        #         print("yess!!!!!!!!!!!!!!!!!!!!!")
+        #         print(entry)
+        agentEndpoint = UNIXClientEndpoint(reactor, os.environ["SSH_AUTH_SOCK"])
+        client = SSHClient(
+            b"localhost", 2222, b"user", 
+            keys=keys, knownhosts=knownHosts, agent=None)
         self.assertIsNotNone(client)
         endpoint = client.newConnection("ls")
         self.assertIsNotNone(endpoint)
