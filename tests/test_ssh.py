@@ -10,7 +10,7 @@ from twisted.conch.client.knownhosts import KnownHostsFile
 from twisted.internet.endpoints import UNIXClientEndpoint
 
 
-from beholder.ssh.sshclient import SSHClient
+from beholder.ssh.sshcmdclient import SSHCmdClient
 
 def readKey(path):
     try:
@@ -54,7 +54,7 @@ class SSHTest(unittest.TestCase):
         #         print("yess!!!!!!!!!!!!!!!!!!!!!")
         #         print(entry)
         agentEndpoint = UNIXClientEndpoint(reactor, os.environ["SSH_AUTH_SOCK"])
-        client = SSHClient(
+        client = SSHCmdClient(
             b"localhost", 2222, b"user", 
             keys=keys, knownhosts=knownHosts, agent=None)
         self.assertIsNotNone(client)
