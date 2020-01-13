@@ -4,3 +4,4 @@ Twisted
 cryptography
 bcrypt
 pyasn1
+ptvsd
