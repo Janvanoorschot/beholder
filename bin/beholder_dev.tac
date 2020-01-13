@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 # raspie == 'raspie'
 if socket.gethostname() == 'raspie':
     import ptvsd
-    ptvsd.enable_attach(address=('192.168.1.16', 3343), redirect_output=True)
+    ptvsd.enable_attach(address=('localhost', 3343), redirect_output=True)
     ptvsd.wait_for_attach()
 
 sys.path.insert(0, os.path.abspath(os.getcwd()))
