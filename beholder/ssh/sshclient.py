@@ -26,18 +26,28 @@ class SSHClient:
                 self.pubkeypath,
                 self.keypath
             ))
+        print("eikel")
         return ssh.ssh_connection_established_d
 
     @ensure_deferred
     async def stop(self):
         pass
 
-    @ensure_deferred
-    async def createTCPConnection(self):
+    def createTCPConnection(self):
+
+        def hostVerified(client, proto):
+            return proto
+
+        def gotProtocol(proto):
+            proto.connection_secure_d.addCallback(hostVerified, proto)
+            self.proto = proto
+            return proto.connection_secure_d
+
         factory = SSHClientFactory(self.fingerprint)
         endpoint = endpoints.TCP4ClientEndpoint(reactor, self.host, self.port)
-        tcp = await endpoint.connect(factory)
-        return tcp
+        d = endpoint.connect(factory)
+        d.addCallback(gotProtocol)
+        return d
 
 
 class SSHConnection(connection.SSHConnection):

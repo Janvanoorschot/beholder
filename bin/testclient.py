@@ -16,6 +16,7 @@ pubkeypath= '~/.ssh/sshclient_rsa.pub'
 async def doMain():
     client = SSHClient(host, port, fingerprint, username, os.path.expanduser(keypath), os.path.expanduser(pubkeypath))
     await client.start()
+    print("lul")
     await client.stop()
 
 
