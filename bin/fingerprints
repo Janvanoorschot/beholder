@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+hosts=('raspie.lan' 'expressionist.lan')
+for i in ${hosts[*]}; do
+        echo ${i}
+        ssh-keyscan "${i}" 2>/dev/null | ssh-keygen -l -E md5 -f - | grep ECDSA | awk '{print $2}' | sed 's/MD5://g'
+done

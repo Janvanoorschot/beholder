@@ -10,6 +10,9 @@
 # Twisted/SSH
 * [Conch, SSH module](https://twistedmatrix.com/documents/current/conch/)
 * [Writing a client with Twisted Conch](https://twistedmatrix.com/documents/current/conch/howto/conch_client.html)
+* [API](https://twistedmatrix.com/documents/current/api/twisted.conch.html)
+* [Async IO](https://docs.python.org/3/library/asyncio-task.html)
+* [Using Async/Await with Twisted](https://stackoverflow.com/questions/44606142/using-async-await-syntax-with-twisted-callbacks)
 
 # Competiters
 
