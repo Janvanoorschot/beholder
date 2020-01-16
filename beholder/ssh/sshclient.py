@@ -3,6 +3,7 @@ from beholder import ensure_deferred
 from twisted.internet import defer, protocol, reactor, endpoints
 from twisted.conch.ssh import connection, userauth, keys, transport
 from twisted.conch import error as concherror
+from twisted.conch.ssh import channel, common
 
 
 class SSHClient:
@@ -14,26 +15,25 @@ class SSHClient:
         self.username = username
         self.keypath = keypath
         self.pubkeypath = pubkeypath
+        self.connection = None
 
-    @ensure_deferred
     async def start(self):
-        tcp = await self.createTCPConnection()
-        ssh = SSHConnection()
+        tcp = await self._createTCPConnection()
+        self.connection = SSHConnection()
         tcp.requestService(
             UserAuthClient(
                 self.username,
-                ssh,
+                self.connection,
                 self.pubkeypath,
                 self.keypath
             ))
-        print("eikel")
-        return ssh.ssh_connection_established_d
+        # return self.connection.ssh_connection_established_d
+        # return tcp.connection_secure_d
 
-    @ensure_deferred
     async def stop(self):
         pass
 
-    def createTCPConnection(self):
+    def _createTCPConnection(self):
 
         def hostVerified(client, proto):
             return proto
@@ -57,7 +57,22 @@ class SSHConnection(connection.SSHConnection):
         self.ssh_connection_established_d = defer.Deferred()
 
     def serviceStarted(self):
+        self.openChannel(DemoChannel(conn = self))
         self.ssh_connection_established_d.callback(self)
+
+class DemoChannel(channel.SSHChannel):
+
+    name = 'session'
+
+    def channelOpen(self, data):
+        d = self.conn.sendRequest(self, 'exec', common.NS('ls'), wantReply = 1)
+        self.lsData = b''
+
+    def dataReceived(self, data):
+        self.lsData += data
+
+    def closed(self):
+        print('ls output:', self.lsData)
 
 
 class UserAuthClient(userauth.SSHUserAuthClient):
@@ -90,6 +105,7 @@ class SSHClientTransport(transport.SSHClientTransport):
             return defer.fail(concherror.ConchError('host key failure'))
 
     def connectionSecure(self):
+        print("connectionSecure")
         self.connection_secure_d.callback(self)
 
 

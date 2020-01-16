@@ -2,7 +2,8 @@ from beholder import ensure_deferred
 from beholder.ssh import SSHClient
 import os.path
 from twisted.python import log
-from twisted.internet import defer, protocol, reactor, endpoints
+from twisted.internet import defer, reactor
+import asyncio
 
 host = 'raspie.lan'
 port = 22
@@ -12,23 +13,21 @@ keypath= '~/.ssh/sshclient_rsa'
 pubkeypath= '~/.ssh/sshclient_rsa.pub'
 
 
-@ensure_deferred
 async def doMain():
     client = SSHClient(host, port, fingerprint, username, os.path.expanduser(keypath), os.path.expanduser(pubkeypath))
     await client.start()
-    print("lul")
-    await client.stop()
-
 
 def main():
 
     def slightlyDelayedShutdown(_):
-        reactor.callLater(0.1, reactor.stop)
+        print("shutdown")
+        # reactor.callLater(0.1, reactor.stop)
 
     def printError(error):
-            log.err(error)
+        print("error")
+        log.err(error)
 
-    d = defer.maybeDeferred(doMain)
+    d = defer.ensureDeferred(doMain())
     d.addErrback(printError)
     d.addBoth(slightlyDelayedShutdown)
     return d
