@@ -1,7 +1,6 @@
 from twisted.internet import defer, protocol, reactor, endpoints
 from twisted.conch.ssh import connection, userauth, keys, transport
 from twisted.conch import error as concherror
-from twisted.conch.ssh import channel, common
 
 
 class SSHClient:
@@ -16,17 +15,18 @@ class SSHClient:
         self.connection = None
 
     async def start(self):
-        tcp = await self._createTCPConnection()
+        transport = await self._createTCPConnection()
+        # we now have an SSH connection with fingerprint checked (connection_secure_d). No auth yet.
         self.connection = SSHConnection()
-        tcp.requestService(
+        transport.requestService(
             UserAuthClient(
                 self.username,
                 self.connection,
                 self.pubkeypath,
                 self.keypath
             ))
-        # return self.connection.ssh_connection_established_d
-        # return tcp.connection_secure_d
+        await self.connection.ready()
+        return self.connection
 
     async def stop(self):
         pass
@@ -48,48 +48,6 @@ class SSHClient:
         return d
 
 
-class SSHConnection(connection.SSHConnection):
-
-    def __init__(self):
-        connection.SSHConnection.__init__(self)
-        self.ssh_connection_established_d = defer.Deferred()
-
-    def serviceStarted(self):
-        self.openChannel(DemoChannel(conn = self))
-        self.ssh_connection_established_d.callback(self)
-
-class DemoChannel(channel.SSHChannel):
-
-    name = 'session'
-
-    def channelOpen(self, data):
-        d = self.conn.sendRequest(self, 'exec', common.NS('ls'), wantReply = 1)
-        self.lsData = b''
-
-    def dataReceived(self, data):
-        self.lsData += data
-
-    def closed(self):
-        print('ls output:', self.lsData)
-
-
-class UserAuthClient(userauth.SSHUserAuthClient):
-
-    def __init__(self, user, connection, public_key_path, private_key_path):
-        userauth.SSHUserAuthClient.__init__(self, user, connection)
-        self.public_key_path  = public_key_path
-        self.private_key_path = private_key_path
-
-    def getPassword(self, prompt=None):
-        return # no password authentication
-
-    def getPublicKey(self):
-        return keys.Key.fromFile(self.public_key_path)
-
-    def getPrivateKey(self):
-        return defer.succeed( keys.Key.fromFile(self.private_key_path) )
-
-
 class SSHClientTransport(transport.SSHClientTransport):
 
     def __init__(self, fingerprint):
@@ -103,7 +61,6 @@ class SSHClientTransport(transport.SSHClientTransport):
             return defer.fail(concherror.ConchError('host key failure'))
 
     def connectionSecure(self):
-        print("connectionSecure")
         self.connection_secure_d.callback(self)
 
 
@@ -122,5 +79,35 @@ class SSHClientFactory(protocol.ClientFactory):
 
     def stopFactory(self):
         self.stopped = True
+
+
+class SSHConnection(connection.SSHConnection):
+
+    def __init__(self):
+        connection.SSHConnection.__init__(self)
+        self.ssh_connection_established_d = defer.Deferred()
+
+    def serviceStarted(self):
+        self.ssh_connection_established_d.callback(self)
+
+    def ready(self):
+        return self.ssh_connection_established_d
+
+
+class UserAuthClient(userauth.SSHUserAuthClient):
+
+    def __init__(self, user, connection, public_key_path, private_key_path):
+        userauth.SSHUserAuthClient.__init__(self, user, connection)
+        self.public_key_path  = public_key_path
+        self.private_key_path = private_key_path
+
+    def getPassword(self, prompt=None):
+        return # no password authentication
+
+    def getPublicKey(self):
+        return keys.Key.fromFile(self.public_key_path)
+
+    def getPrivateKey(self):
+        return defer.succeed( keys.Key.fromFile(self.private_key_path) )
 
 

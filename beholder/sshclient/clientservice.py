@@ -1,8 +1,25 @@
 from twisted.application import service
 from twisted.internet import reactor, defer
 import os.path
+from twisted.conch.ssh import channel, common
 
 from . import sshclient
+
+class DemoChannel(channel.SSHChannel):
+
+    name = 'session'
+
+    def channelOpen(self, data):
+        d = self.conn.sendRequest(self, 'exec', common.NS('ls'), wantReply = 1)
+        self.lsData = b''
+
+    def dataReceived(self, data):
+        self.lsData += data
+
+    def closed(self):
+        print('ls output:', self.lsData)
+
+
 
 class ClientService(service.Service):
     """ Simple SSH service heavily based on sshsimpleserver.py from the Twisted docu.
@@ -11,6 +28,7 @@ class ClientService(service.Service):
     def __init__(self, config={}):
         self.config = config
         self.client = None
+
 
     def startService(self):
         self.client = sshclient.SSHClient(
@@ -21,8 +39,14 @@ class ClientService(service.Service):
             os.path.expanduser(self.config['server']['keypath']),
             os.path.expanduser(self.config['server']['pubkeypath']),
         )
+
+        def startfinished(connection):
+            connection.openChannel(DemoChannel(conn = connection))
+
         d = defer.ensureDeferred(self.client.start())
-        reactor.callLater(10, self.shutdownService, "some_arg")
+        d.addCallback(startfinished)
+        print("here")
+        # reactor.callLater(10, self.shutdownService, "some_arg")
 
     def shutdownService(self, somearg):
         reactor.callFromThread(reactor.stop)
