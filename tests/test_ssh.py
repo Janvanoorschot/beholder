@@ -5,12 +5,11 @@ from twisted.python.filepath import FilePath
 
 from twisted.internet.protocol import Factory, Protocol
 from twisted.conch.ssh.keys import EncryptedKeyError, Key
-from twisted.internet.task import react
 from twisted.conch.client.knownhosts import KnownHostsFile
 from twisted.internet.endpoints import UNIXClientEndpoint
 
 
-from beholder.ssh.sshcmdclient import SSHCmdClient
+from beholder.sshclient.sshcmdclient import SSHCmdClient
 
 def readKey(path):
     try:
