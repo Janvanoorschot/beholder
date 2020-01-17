@@ -1,5 +1,3 @@
-from beholder import ensure_deferred
-
 from twisted.internet import defer, protocol, reactor, endpoints
 from twisted.conch.ssh import connection, userauth, keys, transport
 from twisted.conch import error as concherror
