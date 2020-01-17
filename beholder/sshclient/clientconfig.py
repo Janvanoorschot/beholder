@@ -5,16 +5,11 @@ DEFAULT_CONFIG_FILE = '/etc/sshclient.conf'
 
 def readConfig(filename):
     defs = {
-        "DEFAULT": {
-            "appname": "sshclient"
-        },
         "server": {
             "host": "localhost",
-            "port": 22
+            "port": 22,
+            "fingerprint": "aa:aa:aa:aa:aa:aa:aa:aa:aa:aa:aa:aa:aa:aa:aa:aa"
         },
-        "output": {
-            "file": "file.out"
-        }
     }
     cfg = configparser.ConfigParser()
     cfg.read_dict(defs)
