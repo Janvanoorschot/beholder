@@ -33,12 +33,11 @@ class SSHClient:
 
     def _createTCPConnection(self):
 
-        def hostVerified(client, proto):
+        def hostVerified(proto):
             return proto
 
         def gotProtocol(proto):
-            proto.connection_secure_d.addCallback(hostVerified, proto)
-            self.proto = proto
+            proto.connection_secure_d.addCallback(hostVerified)
             return proto.connection_secure_d
 
         factory = SSHClientFactory(self.fingerprint)
@@ -49,6 +48,7 @@ class SSHClient:
 
 
 class SSHClientTransport(transport.SSHClientTransport):
+    # SSHClientTransport implements the client side of the SSH protocol
 
     def __init__(self, fingerprint):
         self.fingerprint = fingerprint
@@ -66,9 +66,8 @@ class SSHClientTransport(transport.SSHClientTransport):
 
 class SSHClientFactory(protocol.ClientFactory):
 
-    protocol = SSHClientTransport
-
     def __init__(self, fingerprint):
+        self.protocol = SSHClientTransport
         self.fingerprint = fingerprint
         self.stopped = False
 

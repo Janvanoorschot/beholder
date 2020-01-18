@@ -17,9 +17,8 @@ class DemoChannel(channel.SSHChannel):
         self.lsData += data
 
     def closed(self):
-        print('ls output:', self.lsData)
-        self.conn.stop()
-
+        print('ls output:', self.lsData.decode())
+        reactor.callFromThread(reactor.stop)
 
 
 class ClientService(service.Service):
@@ -46,9 +45,6 @@ class ClientService(service.Service):
 
         d = defer.ensureDeferred(self.client.start())
         d.addCallback(startfinished)
-
-    def shutdownService(self, somearg):
-        reactor.callFromThread(reactor.stop)
 
     def createEndpoint(self, command):
         pass
