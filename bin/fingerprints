@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
-hosts=('raspie.lan' 'expressionist.lan')
+
+#hosts=('raspie.lan' 'expressionist.lan')
+
+hosts=('192.168.2.6' '192.168.2.6')
+port=6103
+
 for i in ${hosts[*]}; do
         echo ${i}
-        ssh-keyscan "${i}" 2>/dev/null | ssh-keygen -l -E md5 -f - | grep ECDSA | awk '{print $2}' | sed 's/MD5://g'
+        ssh-keyscan -p$port "${i}" 2>/dev/null | ssh-keygen -l -E md5 -f - | grep ECDSA | awk '{print $2}' | sed 's/MD5://g'
 done

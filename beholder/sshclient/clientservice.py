@@ -18,6 +18,7 @@ class DemoChannel(channel.SSHChannel):
 
     def closed(self):
         print('ls output:', self.lsData)
+        self.conn.stop()
 
 
 
@@ -41,12 +42,10 @@ class ClientService(service.Service):
         )
 
         def startfinished(connection):
-            connection.openChannel(DemoChannel(conn = connection))
+            connection.openChannel(DemoChannel(conn=connection))
 
         d = defer.ensureDeferred(self.client.start())
         d.addCallback(startfinished)
-        print("here")
-        # reactor.callLater(10, self.shutdownService, "some_arg")
 
     def shutdownService(self, somearg):
         reactor.callFromThread(reactor.stop)
