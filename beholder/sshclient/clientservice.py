@@ -5,6 +5,7 @@ from twisted.conch.ssh import channel, common
 
 from . import sshclient
 
+
 class DemoChannel(channel.SSHChannel):
 
     name = 'session'

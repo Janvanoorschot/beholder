@@ -1,6 +1,5 @@
 from twisted.internet import defer, protocol, reactor, endpoints
 from twisted.conch.ssh import connection, userauth, keys, transport
-from twisted.conch.ssh.transport import DISCONNECT_BY_APPLICATION
 from twisted.conch import error as concherror
 
 
@@ -31,7 +30,7 @@ class SSHClient:
         self.connection = None
 
     async def start(self):
-        self.transport = await self._createTCPConnection()
+        self.transport = await self._create_tcp_connection()
         # we now have an SSH client_transport/connection with fingerprint checked (connection_secure_d). No auth yet.
         # Over this transport
         self.connection = SSHConnection()
@@ -46,26 +45,26 @@ class SSHClient:
         return self.connection
 
     async def stop(self):
-        self.transport.sendDisconnect(DISCONNECT_BY_APPLICATION, "done")
+        self.transport.loseConnection()
 
-    def _createTCPConnection(self):
+    def _create_tcp_connection(self):
 
-        def hostVerified(proto):
+        def host_verified(proto):
             return proto
 
-        def gotProtocol(proto):
-            proto.connection_secure_d.addCallback(hostVerified)
+        def got_protocol(proto):
+            proto.connection_secure_d.addCallback(host_verified)
             return proto.connection_secure_d
 
         factory = SSHClientFactory(self.fingerprint)
         endpoint = endpoints.TCP4ClientEndpoint(reactor, self.host, self.port)
         d = endpoint.connect(factory)
-        d.addCallback(gotProtocol)
+        d.addCallback(got_protocol)
         return d
 
 
 class SSHClientTransport(transport.SSHClientTransport):
-    # SSHClientTransport implements the client side of the SSH protocol
+    """ SSHClientTransport implements the client side of the SSH protocol. """
 
     def __init__(self, fingerprint):
         self.fingerprint = fingerprint
@@ -112,9 +111,9 @@ class SSHConnection(connection.SSHConnection):
 
 class UserAuthClient(userauth.SSHUserAuthClient):
 
-    def __init__(self, user, connection, public_key_path, private_key_path):
-        userauth.SSHUserAuthClient.__init__(self, user, connection)
-        self.public_key_path  = public_key_path
+    def __init__(self, user, conn, public_key_path, private_key_path):
+        userauth.SSHUserAuthClient.__init__(self, user, conn)
+        self.public_key_path = public_key_path
         self.private_key_path = private_key_path
 
     def getPassword(self, prompt=None):
@@ -124,6 +123,4 @@ class UserAuthClient(userauth.SSHUserAuthClient):
         return keys.Key.fromFile(self.public_key_path)
 
     def getPrivateKey(self):
-        return defer.succeed( keys.Key.fromFile(self.private_key_path) )
-
-
+        return defer.succeed(keys.Key.fromFile(self.private_key_path))
