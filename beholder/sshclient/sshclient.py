@@ -1,9 +1,23 @@
 from twisted.internet import defer, protocol, reactor, endpoints
 from twisted.conch.ssh import connection, userauth, keys, transport
+from twisted.conch.ssh.transport import DISCONNECT_BY_APPLICATION
 from twisted.conch import error as concherror
 
 
 class SSHClient:
+    """ Conch client interface.
+
+    See https://twistedmatrix.com/documents/current/conch/howto/conch_client.html starting at section
+    'Writing the client' (so not the more limited SSHCommandClientEndpoint). To quote that documentation:
+        Writing a client with Conch involves sub-classing 4 classes:
+            * twisted.conch.ssh.transport.SSHClientTransport (plus  protocol.ClientFactory)
+            * twisted.conch.ssh.connection.SSHConnection
+            * twisted.conch.ssh.userauth.SSHUserAuthClient
+            * twisted.conch.ssh.channel.SSHChannel
+    Note that the use the SSHChannel is kept outside this module and should be implemented by the caller.
+    The async 'start' call returns the 'SSHConnection' connection which can be used to attach an SSHChannel
+    using the 'openChannel' call.
+    """
 
     def __init__(self, host, port, fingerprint, username, keypath, pubkeypath):
         self.host = host
@@ -12,13 +26,16 @@ class SSHClient:
         self.username = username
         self.keypath = keypath
         self.pubkeypath = pubkeypath
+        #
+        self.transport = None
         self.connection = None
 
     async def start(self):
-        transport = await self._createTCPConnection()
-        # we now have an SSH connection with fingerprint checked (connection_secure_d). No auth yet.
+        self.transport = await self._createTCPConnection()
+        # we now have an SSH client_transport/connection with fingerprint checked (connection_secure_d). No auth yet.
+        # Over this transport
         self.connection = SSHConnection()
-        transport.requestService(
+        self.transport.requestService(
             UserAuthClient(
                 self.username,
                 self.connection,
@@ -29,7 +46,7 @@ class SSHClient:
         return self.connection
 
     async def stop(self):
-        pass
+        self.transport.sendDisconnect(DISCONNECT_BY_APPLICATION, "done")
 
     def _createTCPConnection(self):
 
@@ -101,7 +118,7 @@ class UserAuthClient(userauth.SSHUserAuthClient):
         self.private_key_path = private_key_path
 
     def getPassword(self, prompt=None):
-        return # no password authentication
+        return  # no password authentication
 
     def getPublicKey(self):
         return keys.Key.fromFile(self.public_key_path)

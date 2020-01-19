@@ -8,9 +8,10 @@ from . import sshclient
 class DemoChannel(channel.SSHChannel):
 
     name = 'session'
+    service = None
 
     def channelOpen(self, data):
-        d = self.conn.sendRequest(self, 'exec', common.NS('ls'), wantReply = 1)
+        d = self.conn.sendRequest(self, 'exec', common.NS('ls'), wantReply=1)
         self.lsData = b''
 
     def dataReceived(self, data):
@@ -18,7 +19,7 @@ class DemoChannel(channel.SSHChannel):
 
     def closed(self):
         print('ls output:', self.lsData.decode())
-        reactor.callFromThread(reactor.stop)
+        self.service.stop()
 
 
 class ClientService(service.Service):
@@ -41,13 +42,19 @@ class ClientService(service.Service):
         )
 
         def startfinished(connection):
-            connection.openChannel(DemoChannel(conn=connection))
+            self.connection = connection
+            self.channel = DemoChannel(conn=connection)
+            self.channel.service = self
+            connection.openChannel(self.channel)
 
         d = defer.ensureDeferred(self.client.start())
         d.addCallback(startfinished)
 
-    def createEndpoint(self, command):
-        pass
+    def stop(self):
+        def stopfinished(ignore):
+            reactor.callFromThread(reactor.stop)
+        d = defer.ensureDeferred(self.client.stop())
+        d.addCallback(stopfinished)
 
     def stopService(self):
         print("service stopped")
